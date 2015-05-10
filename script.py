@@ -1,16 +1,26 @@
 import os
-
+import re
 
 def filematch(f, show):
-    if f.find(show) != -1:
+    sub = show
+    output = ""
+    for i in sub.split():
+        output += i[0]
+    if len(output) > 3:
+        if re.search(output, f, re.IGNORECASE) != None:
+            return True
+    if re.search(show, f, re.IGNORECASE) != None:
         return True
+    if show.find(' ') != -1:
+        if re.search(re.sub([' '], '.', show), f, re.IGNORECASE) != None:
+            return True
+
+    return False
 
 def sortshow(show, dfolder):
     for root, dirs, files in os.walk(dfolder):
         for f in files:
-            print(f)
             if filematch(f, show):              
-            #TODO: matcha f (filename) við margar útgáfur af show
                 show = show.replace(' ', '')
                 s = os.path.join(dfolder, show)
                 path = os.path.abspath(os.path.join(root,f))
@@ -30,8 +40,8 @@ def sortshow(show, dfolder):
 #show = input('What do you feel like watching today? ')
 #df = input('Where would you like to search for your shows? (type d for Downloads) \n Your search results will be stored in the folder you serched.')
 #if df == 'd' or df == 'D':
-#    dfolder = 'Downloads'
+#    dfolder = 'downloads'
 #else:
 #    dfolder = df
 
-sortshow('dexter', 'test')
+sortshow('dexter', 'downloads')
