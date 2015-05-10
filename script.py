@@ -1,17 +1,21 @@
 import os
 
+
+def filematch(f, show):
+    if f.find(show) != -1:
+        return True
+
 def sortshow(show, dfolder):
     for root, dirs, files in os.walk(dfolder):
         for f in files:
             print(f)
-            if f == 'testgaur.txt':
-                print("wooo")
-            #TODO 1): finna nafnið í strengnum, há og lágstafa kombó, engin bil               
+            if filematch(f, show):              
+            #TODO: matcha f (filename) við margar útgáfur af show
                 show = show.replace(' ', '')
                 s = os.path.join(dfolder, show)
-            
                 path = os.path.abspath(os.path.join(root,f))
                 newpath = os.path.join(os.path.abspath(s),f)
+                print(path)
 
                 if not os.path.isdir(s):
                     os.mkdir(s)
@@ -20,10 +24,6 @@ def sortshow(show, dfolder):
                 else:
                     os.rename(path, newpath)
                     print(newpath)
-                
-                #Setja allar skrár sem þetta passar við í eina möppu
-                #print(f)
-
 
 
 
@@ -34,4 +34,4 @@ def sortshow(show, dfolder):
 #else:
 #    dfolder = df
 
-sortshow('house of cards', 'test')
+sortshow('dexter', 'test')
